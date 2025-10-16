@@ -90,23 +90,28 @@ export default function DiagnosisResult({ scores }: DiagnosisResultProps) {
   // Prepare data for radar chart
   const chartData = [
     {
-      category: "リセット志向",
+      category: "リセット",
+      fullCategory: "リセット志向",
       value: scores.fasting,
     },
     {
-      category: "糖質依存",
+      category: "糖質制限",
+      fullCategory: "糖質依存",
       value: scores.lowCarb,
     },
     {
-      category: "食行動バランス",
+      category: "食べ順",
+      fullCategory: "食行動バランス",
       value: scores.saladFirst,
     },
     {
-      category: "外的サポート",
+      category: "サポート",
+      fullCategory: "外的サポート",
       value: scores.beautySupport,
     },
     {
-      category: "習慣依存",
+      category: "習慣",
+      fullCategory: "習慣依存",
       value: scores.portionControl,
     },
   ]
@@ -145,37 +150,52 @@ export default function DiagnosisResult({ scores }: DiagnosisResultProps) {
           <CardTitle className="text-xl sm:text-2xl">あなたの傾向分析</CardTitle>
           <CardDescription>5つの指標からあなたのタイプを分析しました</CardDescription>
         </CardHeader>
-        <CardContent>
-          <ChartContainer
-            config={{
-              value: {
-                label: "スコア",
-                color: "hsl(var(--primary))",
-              },
-            }}
-            className="h-[300px] sm:h-[400px]"
-          >
-            <ResponsiveContainer width="100%" height="100%">
-              <RadarChart data={chartData}>
-                <PolarGrid stroke="hsl(var(--border))" />
-                <PolarAngleAxis
-                  dataKey="category"
-                  tick={{ fill: "hsl(var(--foreground))", fontSize: 12 }}
-                  className="text-xs sm:text-sm"
-                />
-                <PolarRadiusAxis angle={90} domain={[0, 100]} tick={{ fill: "hsl(var(--muted-foreground))" }} />
-                <Radar
-                  name="スコア"
-                  dataKey="value"
-                  stroke="hsl(var(--primary))"
-                  fill="hsl(var(--primary))"
-                  fillOpacity={0.6}
-                  strokeWidth={2}
-                />
-                <ChartTooltip content={<ChartTooltipContent />} />
-              </RadarChart>
-            </ResponsiveContainer>
-          </ChartContainer>
+        <CardContent className="p-1 sm:p-6">
+          <div className="w-full overflow-hidden">
+            <ChartContainer
+              config={{
+                value: {
+                  label: "スコア",
+                  color: "hsl(var(--primary))",
+                },
+              }}
+              className="h-[260px] sm:h-[400px] w-full"
+            >
+              <ResponsiveContainer width="100%" height="100%">
+                <RadarChart 
+                  data={chartData} 
+                  margin={{ top: 10, right: 15, bottom: 10, left: 15 }}
+                  className="mx-auto"
+                >
+                  <PolarGrid stroke="hsl(var(--border))" />
+                  <PolarAngleAxis
+                    dataKey="category"
+                    tick={{ 
+                      fill: "hsl(var(--foreground))", 
+                      fontSize: 11,
+                      textAnchor: 'middle'
+                    }}
+                    className="text-[11px] sm:text-sm font-medium"
+                  />
+                  <PolarRadiusAxis 
+                    angle={90} 
+                    domain={[0, 100]} 
+                    tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 9 }}
+                    tickCount={3}
+                  />
+                  <Radar
+                    name="スコア"
+                    dataKey="value"
+                    stroke="hsl(var(--primary))"
+                    fill="hsl(var(--primary))"
+                    fillOpacity={0.6}
+                    strokeWidth={2}
+                  />
+                  <ChartTooltip content={<ChartTooltipContent />} />
+                </RadarChart>
+              </ResponsiveContainer>
+            </ChartContainer>
+          </div>
         </CardContent>
       </Card>
 
